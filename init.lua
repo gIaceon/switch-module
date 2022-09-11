@@ -6,14 +6,6 @@ export type PassedTable = {[CaseType | DefaultType]: (SwitchAcceptedStatementTyp
 export type EvalutateFunctionType = (PassedTable, SwitchAcceptedStatementType) -> ();
 
 local function DefaultEvaluateSwitchCase(Args, Passed_Argument: SwitchAcceptedStatementType): EvalutateFunctionType
-	if (typeof(Args == 'string')) then
-		if (Passed_Argument == Args) then
-			-- if its the passed argument
-			return true, Args;
-		end;
-		return false, nil;
-	end;
-
 	for _,v in ipairs(Args) do
 		if (Passed_Argument == v) then
 			-- if its the passed argument
@@ -26,9 +18,10 @@ end;
 
 local Default: DefaultType = {};
 local Case: CaseType = function(Args)
-	-- if (type(Args) == "table") then
+	if (type(Args) == "table") then
 		return Args;
-	-- end;
+	end;
+	return {Args};
 end;
 
 local mt = {
